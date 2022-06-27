@@ -1,0 +1,255 @@
+CREATE TABLE PlaneCapacity( Airlines varchar(20), PlaneType varchar(20), Capacity int, PRIMARY KEY (Airlines, PlaneType) );
+CREATE TABLE Flight( FID int , Airlines varchar(20) not null, PlaneType varchar(20) not null, Date date, Time time, origin varchar(20) not null, destination varchar(20) not null, status varchar(10) not null, PRIMARY KEY( FID, origin) ,FOREIGN KEY (Airlines, PlaneType) REFERENCES planecapacity(Airlines, PlaneType) );
+CREATE TABLE Passenger ( PassportNumber varchar(10) PRIMARY KEY, FID int, Name varchar(20), Address varchar(50), PhoneNumber varchar(10), BoardingNumber int DEFAULT 0, FOREIGN KEY (FID) REFERENCES Flight(FID) );
+CREATE Table Staff( SID int PRIMARY KEY, Name varchar(30), Position varchar(20), ContactNumber varchar(10) );
+CREATE Table Flight_Staff( FID int, SID int, PRIMARY KEY (FID, SID), FOREIGN KEY (FID) REFERENCES flight (FID), FOREIGN KEY (SID) REFERENCES staff (SID) on delete CASCADE);
+CREATE TABLE Baggage ( Barcode varchar(12), PassportNumber varchar(10), NumberOfBags int, Weight float, Additional_Fees float, PRIMARY KEY (BarCode, PassportNumber), FOREIGN KEY (PassportNumber) REFERENCES passenger(PassportNumber) );
+
+CREATE TABLE Users( user_name varchar(20), user_passport_no varchar(10) not null, user_UID varchar(20) PRIMARY KEY, user_password varchar(20) not null, admin boolean );
+
+
+
+
+INSERT INTO PlaneCapacity VALUES('AIRCANADA' , 'Airbus A300' , 150);
+INSERT INTO PlaneCapacity VALUES('AIRCANADA' , 'Boeing 747' , 100);
+INSERT INTO PlaneCapacity VALUES('BRITISH AIRWAYS' , 'Airbus A330' , 150);
+INSERT INTO PlaneCapacity VALUES('BRITISH AIRWAYS' , 'Boeing 777' , 100);
+INSERT INTO PlaneCapacity VALUES('BRITISH AIRWAYS' , 'Boeing 737' , 150);
+INSERT INTO PlaneCapacity VALUES('AIRINDIA' , 'Airbus A300' , 150);
+INSERT INTO PlaneCapacity VALUES('AIRINDIA' , 'Boeing 747' , 100);
+INSERT INTO PlaneCapacity VALUES('LUFTHANSA' , 'Boeing 747' , 120);
+INSERT INTO PlaneCapacity VALUES('LUFTHANSA' , 'Boeing 777' , 120);
+INSERT INTO PlaneCapacity VALUES('LUFTHANSA' , 'Airbus A300' , 150);
+INSERT INTO PlaneCapacity VALUES('AIRCHINA' , 'Airbus A300' , 150);
+INSERT INTO PlaneCapacity VALUES('AIRCHINA' , 'Boeing 737' , 150);
+INSERT INTO PlaneCapacity VALUES('AIRCHINA' , 'Boeing 787' , 150);
+
+INSERT INTO FLIGHT VALUES (101, 'AIRCANADA', 'Airbus A300', '2019-03-30', '1:00', 'FWU', 'Shanghai', 'DELAYED' );
+INSERT INTO FLIGHT VALUES (102, 'AIRINDIA', 'Airbus A300', '2019-03-30', '5:00', 'FWU', 'NEW DELHI', 'ON TIME' );
+INSERT INTO FLIGHT VALUES (102, 'AIRINDIA', 'Airbus A300', '2019-03-30', '3:35', 'BOSTON', 'FWU', 'ON TIME' );
+INSERT INTO FLIGHT VALUES (103, 'AIRCANADA', 'Airbus A300', '2019-03-30', '13:00', 'FWU', 'OSAKA', 'ON TIME' );
+INSERT INTO FLIGHT VALUES (104, 'BRITISH AIRWAYS', 'Airbus A330', '2019-03-30', '11:00', 'FWU', 'PARIS', 'ON TIME' );
+INSERT INTO FLIGHT VALUES (105, 'BRITISH AIRWAYS', 'Boeing 777', '2019-03-30', '10:30', 'Sao Paulo', 'FWU', 'ON TIME' );
+INSERT INTO FLIGHT VALUES (106, 'AIRINDIA', 'Boeing 747', '2019-03-30', '00:30', 'MUMBAI', 'FWU', 'DELAYED' );
+INSERT INTO FLIGHT VALUES (107, 'AIRCANADA', 'Airbus A300', '2019-03-30', '16:00', 'FWU', 'NEW YORK', 'ON TIME' );
+INSERT INTO FLIGHT VALUES (108, 'LUFTHANSA', 'Airbus A300', '2019-03-30', '19:00', 'CAIRO', 'FWU', 'ON TIME' );
+INSERT INTO FLIGHT VALUES (109, 'AIRCANADA', 'Boeing 747', '2019-03-31', '7:00', 'FWU', 'BEIJING', 'ON TIME' );
+INSERT INTO FLIGHT VALUES (109, 'AIRCANADA', 'Boeing 747', '2019-03-31', '3:47', 'CAIRO', 'FWU', 'ON TIME' );
+INSERT INTO FLIGHT VALUES (110, 'LUFTHANSA', 'Boeing 777', '2019-03-31', '13:00', 'MEXICO', 'FWU', 'ON TIME' );
+INSERT INTO FLIGHT VALUES (111, 'BRITISH AIRWAYS', 'Boeing 737', '2019-04-01', '12:39', 'PARIS', 'FWU', 'ON TIME' );
+INSERT INTO FLIGHT VALUES (111, 'BRITISH AIRWAYS', 'Boeing 737', '2019-04-01', '13:00', 'FWU', 'Shanghai',  'ON TIME' );
+INSERT INTO FLIGHT VALUES (112, 'AIRCANADA', 'Airbus A300', '2019-04-01', '5:43', 'FWU', 'MUMBAI', 'ON TIME' );
+INSERT INTO FLIGHT VALUES (113, 'AIRINDIA', 'Boeing 747', '2019-04-01','15:00', 'BEIJING', 'FW', 'ON TIME' );
+INSERT INTO FLIGHT VALUES (114, 'LUFTHANSA', 'Boeing 747', '2019-04-02', '11:07', 'FWU', 'Sao Paulo', 'ON TIME' );
+INSERT INTO FLIGHT VALUES (114, 'LUFTHANSA', 'Boeing 747', '2019-04-02', '1:12', 'MUMBAI', 'FWU', 'ON TIME' );
+INSERT INTO FLIGHT VALUES (115, 'AIRCANADA', 'Airbus A300', '2019-04-02', '15:00', 'FWU', 'TOKYO', 'ON TIME' );
+INSERT INTO FLIGHT VALUES (116, 'AIRCHINA', 'Boeing 737', '2019-04-02', '23:36', 'DHAKA', 'FWU', 'ON TIME' );
+INSERT INTO FLIGHT VALUES (116, 'AIRCHINA', 'Boeing 737', '2019-04-03', '7:00', 'FWU', 'MOSCOW', 'ON TIME' );
+INSERT INTO FLIGHT VALUES (117, 'LUFTHANSA', 'Boeing 747', '2019-03-30', '1:47', 'FWU', 'KARACHI', 'DELAYED' );
+INSERT INTO FLIGHT VALUES (118, 'AIRINDIA', 'Airbus A300', '2019-03-30', '5:46', 'PARIS', 'FWU', 'DELAYED' );
+INSERT INTO FLIGHT VALUES (119, 'AIRCHINA', 'Airbus A300', '2019-03-30', '7:16', 'FWU', 'OSAKA', 'DELAYED' );
+INSERT INTO FLIGHT VALUES (120, 'LUFTHANSA', 'Boeing 777', '2019-04-03', '18:49', 'FWU', 'MEXICO', 'ON TIME' );
+INSERT INTO FLIGHT VALUES (120, 'LUFTHANSA', 'Boeing 777', '2019-04-03', '11:14', 'OSAKA', 'FWU', 'ON TIME' );
+
+
+
+INSERT INTO Passenger values('YA86518247', 101, 'Singh Karanbir',' 8788 delcourt cres Delta BC','7776851441',DEFAULT);
+INSERT INTO Passenger values('YA86700247', 101, 'Parul Bhatt',' 245 Main Street Vancouver BC','7236851001',DEFAULT);
+INSERT INTO Passenger values('YA85432001', 102, 'Shubam Taneja',' 345 fraster st Vancouver BC','6046851441',DEFAULT);
+INSERT INTO Passenger values('FJ86518890', 102, 'Raj Kumar',' 234 cambie st Vancouver BC','7788657034',DEFAULT);
+INSERT INTO Passenger values('YA53442340', 103, 'Bhupinder Gill',' 13490 Surrey BC','7790011022',DEFAULT);
+INSERT INTO Passenger values('MS86812670', 103, 'Jing Seng',' 560 birghouse Richmond BC','7790056790',DEFAULT);
+INSERT INTO Passenger values('YA86345547', 104, 'Singh Rajvir',' 11692 Delta BC','6046851441',DEFAULT);
+INSERT INTO Passenger values('YA83250247', 105, 'Dhaliwal Ranvir',' 245 King Edward Vancouver BC','7236851001',DEFAULT);
+INSERT INTO Passenger values('TR86523401', 106, 'Sukhvir Kaur',' Via lestra Mattoni Italy','6046851441',DEFAULT);
+INSERT INTO Passenger values('YA85435890', 101, 'Jasbir Kaur',' 345 Union Road San Francisco CA','7788657456',DEFAULT);
+INSERT INTO Passenger values('JZ87566340', 103, 'Sukhmani Sohi',' 5454 San Mateo ave San Bruno CA','7790011155',DEFAULT);
+INSERT INTO Passenger values('MS83453670', 103, 'Jagtar Gill',' 560 Tully Road Turlock CA','7790056777',DEFAULT);
+
+INSERT INTO Passenger values('ZA86518344', 101, 'Pittana Pierpaolo','Viale mattoni Sabaudia Italy','3339035033',DEFAULT);
+INSERT INTO Passenger values('YA86700254', 110, 'Angelo Peruzzi','Viale Gramsci 22 San Felice Circeo','3339035023',DEFAULT);
+INSERT INTO Passenger values('NZ86512033', 111, 'Danny Sandon',' Via Piave 42 Montevarchi Italy','3332335033',DEFAULT);
+INSERT INTO Passenger values('TI86519000', 107, 'Rajvir Sanghera',' 234 Commercial st Alberta ','7788657034',DEFAULT);
+INSERT INTO Passenger values('YA86823554', 109, 'Jixn Yung',' Beijing Chhina','7790011022',DEFAULT);
+INSERT INTO Passenger values('MS86816436', 109, 'Yak Leather',' 2627 Granville St Toronto','7790056790',DEFAULT);
+INSERT INTO Passenger values('YA90010943', 112, 'Ram Rahim',' Ambala Haryana ','9981230012',DEFAULT);
+INSERT INTO Passenger values('YA34200435', 111, 'Bholla Babba',' Model Town Jalandhar','7236851001',DEFAULT);
+INSERT INTO Passenger values('TR86512021', 112, 'Eva White',' Oxford St London','6046851441',DEFAULT);
+INSERT INTO Passenger values('YA86518845', 113, 'Anne Brown','234 Los Angeles CA','7788657456',DEFAULT);
+INSERT INTO Passenger values('JZ86812234', 115, 'Santokh Singh',' 4523 Folsom St San Francisco CA','7790011155',DEFAULT);
+INSERT INTO Passenger values('MS00012670', 108, 'Melania Acanfora',' Via palestra Terranuova Italy','3339035033',DEFAULT);
+
+INSERT INTO Passenger values('ZA86348344', 101, 'Emily Hudson','Oxnard Ave New Zealand','3439035033',DEFAULT);
+INSERT INTO Passenger values('YA86712224', 101, 'Manuel Gatti',' 401 favulus st Bakersfield CA','3339000111',DEFAULT);
+INSERT INTO Passenger values('NZ86323033', 102, 'Chiara Ottaviano',' viale rottamato Pescara','3337771111',DEFAULT);
+INSERT INTO Passenger values('TI86111000', 102, 'Andrew Roberts',' Kangaroo st Australia ','6043567703',DEFAULT);
+INSERT INTO Passenger values('YA86899554', 103, 'Jeremy Chiu',' Hong Kong','7788656798',DEFAULT);
+INSERT INTO Passenger values('MS86811436', 103, 'Flavio Augusto',' 45 duthdsf Berlin','7790056790',DEFAULT);
+INSERT INTO Passenger values('YA90043943', 104, 'Marta White',' Spanish highway New Zealand ','9981230012',DEFAULT);
+INSERT INTO Passenger values('YA34212435', 105, 'Catherine Jong',' Shangai','7236851001',DEFAULT);
+INSERT INTO Passenger values('TR86576021', 106, 'Gianluigi Buffon',' La vie delle baguette Paris France','6046851441',DEFAULT);
+INSERT INTO Passenger values('YA86512845', 101, 'Cristiano Ronaldo','Viale turino Torino Italy','7788657456',DEFAULT);
+INSERT INTO Passenger values('JZ86811234', 103, 'David Miller',' howard st South Africa','7790011155',DEFAULT);
+INSERT INTO Passenger values('MS00077670', 103, 'Marcus Stoinis',' la vias esperados Cancun Mexico','3339035033',DEFAULT);
+
+INSERT INTO Staff values(201, 'Sandra Robertson','Pilot','7231230987');
+INSERT INTO Staff values(202, 'Edward Coward','Hostess','6043367890');
+INSERT INTO Staff values(203, 'Abhimanyu Singhania','Medic','60456789009');
+INSERT INTO Staff values(204, 'Chiku gobar','Pilot','4562341234');
+INSERT INTO Staff values(205, 'Karan Aujla','Pilot','1234567891');
+INSERT INTO Staff values(206, 'Sidhu Moosewala','Pilot','0987654321');
+INSERT INTO Staff values(207, 'Deep Jandu','Pilot','2143657980');
+INSERT INTO Staff values(208, 'Elly Mangat','Pilot','5554441234');
+INSERT INTO Staff values(209, 'Mary Beulf','Medic','6788761234');
+INSERT INTO Staff values(210, 'Paul Vecino','Hostess','9871235413');
+INSERT INTO Staff values(211, 'Gary Young','Hostess','3361231001');
+INSERT INTO Staff values(212, 'Hossein Ali','Hostess','2231111010');
+INSERT INTO Staff values(213, 'Rayan Volger','Hostess','1231231231');
+INSERT INTO Staff values(214, 'Sara Richards','Medic','3213213213');
+INSERT INTO Staff values(215, 'Daniel Proier','Hostess','6057651023');
+INSERT INTO Staff values(216, 'Michelle Spheparad','Medic','6397561324');
+INSERT INTO Staff values(217, 'Behnaz Esmaili','Hostess','7788778009');
+INSERT INTO Staff values(218, 'Jordan Hill','Hostess','1215588743');
+INSERT INTO Staff values(219, 'Jamie Olsen','Hostess','6689872256');
+INSERT INTO Staff values(220, 'Mohammad Sadiq','Hostess','9877891285');
+
+
+INSERT INTO Staff values(221, 'Jammie Bark','Pilot','7231230987');
+INSERT INTO Staff values(222, 'Agustina Mantz','Hostess','6043367890');
+INSERT INTO Staff values(223, 'Carleen Gulbranson','Medic','60456789009');
+INSERT INTO Staff values(224, 'Lino Clampitt','Pilot','4562341234');
+INSERT INTO Staff values(225, 'Libbie Normand','Pilot','1234567891');
+INSERT INTO Staff values(226, 'Vernice Sabol','Pilot','0987654321');
+INSERT INTO Staff values(227, 'Jenifer Vierling','Pilot','2143657980');
+INSERT INTO Staff values(228, 'Elly Mangat','Pilot','5554441234');
+INSERT INTO Staff values(229, 'Ramonita Bulfer','Medic','6788761234');
+INSERT INTO Staff values(230, 'Marni Courtright','Hostess','9871235413');
+INSERT INTO Staff values(231, 'Kirsten Lintner','Hostess','3361231001');
+INSERT INTO Staff values(232, 'Ellamae Trego','Hostess','2231111010');
+INSERT INTO Staff values(233, 'Minna Candy','Hostess','1231231231');
+INSERT INTO Staff values(234, 'Simone Brawley','Medic','3213213213');
+INSERT INTO Staff values(235, 'Jose Escareno','Hostess','6057651023');
+INSERT INTO Staff values(236, 'Michelle Spheparad','Medic','6397561324');
+INSERT INTO Staff values(237, 'Chere Wegner','Hostess','7788778009');
+INSERT INTO Staff values(238, 'Marquerite Moyes','Hostess','1215588743');
+INSERT INTO Staff values(239, 'Chere Wegner','Hostess','6689872256');
+INSERT INTO Staff values(240, 'Adria Cowher','Hostess','9877891285');
+
+INSERT INTO Staff values(241, 'Pearlene Crumble','Pilot','7231230987');
+INSERT INTO Staff values(242, 'Lesli Irizarry','Hostess','6043367890');
+INSERT INTO Staff values(243, 'Shery Proffit','Medic','60456789009');
+INSERT INTO Staff values(244, 'Cherelle Bomba','Pilot','4562341234');
+INSERT INTO Staff values(245, 'Pearle Khan','Pilot','1234567891');
+INSERT INTO Staff values(246, 'Stephaine Cabana','Pilot','0987654321');
+INSERT INTO Staff values(247, 'Celia Guffey','Pilot','2143657980');
+INSERT INTO Staff values(248, 'Lorriane Kirschbaum','Pilot','5554441234');
+INSERT INTO Staff values(249, 'Dorene Craver','Medic','6788761234');
+INSERT INTO Staff values(250, 'Dominic Wharton','Hostess','9871235413');
+INSERT INTO Staff values(251, 'Marie Enriquez','Hostess','3361231001');
+INSERT INTO Staff values(252, 'Mickie Gravelle','Hostess','2231111010');
+INSERT INTO Staff values(253, 'Carey Fedor','Hostess','1231231231');
+INSERT INTO Staff values(254, 'Muoi Tarter','Medic','3213213213');
+INSERT INTO Staff values(255, 'Oren Guthridge','Hostess','6057651023');
+INSERT INTO Staff values(256, 'Michelle Spheparad','Medic','6397561324');
+INSERT INTO Staff values(257, 'Shawnee Tygart','Hostess','7788778009');
+INSERT INTO Staff values(258, 'Booker Bock','Hostess','1215588743');
+INSERT INTO Staff values(259, 'Cira Washburn','Hostess','6689872256');
+INSERT INTO Staff values(260, 'Nakia Whitaker','Hostess','9877891285');
+
+INSERT INTO FLIGHT_STAFF VALUES(104,201);
+INSERT INTO FLIGHT_STAFF VALUES(115,202);
+INSERT INTO FLIGHT_STAFF VALUES(107,203);
+INSERT INTO FLIGHT_STAFF VALUES(109,204);
+INSERT INTO FLIGHT_STAFF VALUES(119,205);
+INSERT INTO FLIGHT_STAFF VALUES(111,206);
+INSERT INTO FLIGHT_STAFF VALUES(101,207);
+INSERT INTO FLIGHT_STAFF VALUES(110,208);
+INSERT INTO FLIGHT_STAFF VALUES(110,209);
+INSERT INTO FLIGHT_STAFF VALUES(113,210);
+INSERT INTO FLIGHT_STAFF VALUES(114,211);
+INSERT INTO FLIGHT_STAFF VALUES(116,212);
+INSERT INTO FLIGHT_STAFF VALUES(106,213);
+INSERT INTO FLIGHT_STAFF VALUES(120,214);
+INSERT INTO FLIGHT_STAFF VALUES(112,215);
+INSERT INTO FLIGHT_STAFF VALUES(102,216);
+INSERT INTO FLIGHT_STAFF VALUES(108,217);
+INSERT INTO FLIGHT_STAFF VALUES(103,218);
+INSERT INTO FLIGHT_STAFF VALUES(118,219);
+INSERT INTO FLIGHT_STAFF VALUES(115,220);
+INSERT INTO FLIGHT_STAFF VALUES(118,221);
+INSERT INTO FLIGHT_STAFF VALUES(120,222);
+INSERT INTO FLIGHT_STAFF VALUES(103,223);
+INSERT INTO FLIGHT_STAFF VALUES(108,224);
+INSERT INTO FLIGHT_STAFF VALUES(114,225);
+INSERT INTO FLIGHT_STAFF VALUES(118,226);
+INSERT INTO FLIGHT_STAFF VALUES(115,227);
+INSERT INTO FLIGHT_STAFF VALUES(108,228);
+INSERT INTO FLIGHT_STAFF VALUES(105,229);
+INSERT INTO FLIGHT_STAFF VALUES(109,230);
+INSERT INTO FLIGHT_STAFF VALUES(117,231);
+INSERT INTO FLIGHT_STAFF VALUES(113,232);
+INSERT INTO FLIGHT_STAFF VALUES(105,233);
+INSERT INTO FLIGHT_STAFF VALUES(118,234);
+INSERT INTO FLIGHT_STAFF VALUES(113,235);
+INSERT INTO FLIGHT_STAFF VALUES(120,236);
+INSERT INTO FLIGHT_STAFF VALUES(107,237);
+INSERT INTO FLIGHT_STAFF VALUES(104,238);
+INSERT INTO FLIGHT_STAFF VALUES(102,239);
+INSERT INTO FLIGHT_STAFF VALUES(112,240);
+INSERT INTO FLIGHT_STAFF VALUES(117,241);
+INSERT INTO FLIGHT_STAFF VALUES(119,242);
+INSERT INTO FLIGHT_STAFF VALUES(106,243);
+INSERT INTO FLIGHT_STAFF VALUES(115,244);
+INSERT INTO FLIGHT_STAFF VALUES(110,245);
+INSERT INTO FLIGHT_STAFF VALUES(116,246);
+INSERT INTO FLIGHT_STAFF VALUES(114,247);
+INSERT INTO FLIGHT_STAFF VALUES(107,248);
+INSERT INTO FLIGHT_STAFF VALUES(104,249);
+INSERT INTO FLIGHT_STAFF VALUES(111,250);
+INSERT INTO FLIGHT_STAFF VALUES(111,251);
+INSERT INTO FLIGHT_STAFF VALUES(101,252);
+INSERT INTO FLIGHT_STAFF VALUES(101,253);
+INSERT INTO FLIGHT_STAFF VALUES(101,254);
+INSERT INTO FLIGHT_STAFF VALUES(109,255);
+INSERT INTO FLIGHT_STAFF VALUES(117,256);
+INSERT INTO FLIGHT_STAFF VALUES(119,257);
+INSERT INTO FLIGHT_STAFF VALUES(113,258);
+INSERT INTO FLIGHT_STAFF VALUES(105,259);
+INSERT INTO FLIGHT_STAFF VALUES(110,260);
+
+
+
+INSERT INTO Baggage VALUES ('ABC-abc-1234','YA86518247',2,40,0);
+INSERT INTO Baggage VALUES ('ABC-abc-1235','YA86700247',1,25,0);
+INSERT INTO Baggage VALUES ('ABC-abc-1236','YA86518845',2,37,0);
+INSERT INTO Baggage VALUES ('ABC-abc-1237','YA86700254',1,15,0);
+INSERT INTO Baggage VALUES ('ABC-abc-1238','JZ86811234',2,35,0);
+INSERT INTO Baggage VALUES ('ABC-abc-1239','JZ87566340',1,19,0);
+INSERT INTO Baggage VALUES ('ABC-abc-1240','MS00077670',2,45,0);
+INSERT INTO Baggage VALUES ('ABC-abc-1241','MS86811436',3,60,100);
+INSERT INTO Baggage VALUES ('ABC-abc-1242','MS86812670',2,36,0);
+INSERT INTO Baggage VALUES ('ABC-abc-1243','MS86816436',4,77,150);
+INSERT INTO Baggage VALUES ('ABC-abc-1244','YA86512845',3,58,100);
+INSERT INTO Baggage VALUES ('ABC-abc-1245','MS86812670',3,54,98);
+INSERT INTO Baggage VALUES ('ABC-abc-1246','YA86345547',2,42,0);
+INSERT INTO Baggage VALUES ('ABC-abc-1247','YA85435890',2,41,0);
+INSERT INTO Baggage VALUES ('ABC-abc-1248','NZ86512033',1,24,0);
+INSERT INTO Baggage VALUES ('ABC-abc-1249','TI86519000',2,42,0);
+INSERT INTO Baggage VALUES ('ABC-abc-1260','YA85432001',4,88,120);
+INSERT INTO Baggage VALUES ('ABC-abc-1261','YA83250247',3,62,100);
+INSERT INTO Baggage VALUES ('ABC-abc-1262','YA53442340',2,45,0);
+INSERT INTO Baggage VALUES ('ABC-abc-1263','YA34200435',3,63,100);
+INSERT INTO Baggage VALUES ('ABC-abc-1264','TR86512021',2,34,0);
+INSERT INTO Baggage VALUES ('ABC-abc-1265','TI86111000',1,14,0);
+INSERT INTO Baggage VALUES ('ABC-abc-1266','TR86523401',1,22,0);
+
+INSERT INTO Users VALUES ('Karanbir','YA86518247','100KS101','root',true);
+
+INSERT INTO Users VALUES ('Victor','JZ86812234','120KQ111','flyquick12',false);
+
+INSERT INTO Users VALUES ('Admin','MS86816436','111KE333', 'root',true);
+
+INSERT INTO Users VALUES ('Paul','TI86519000','123ER456','timhortons13',false);
+
+INSERT INTO Users VALUES ('John','TI86519211','user1','123',false);
+INSERT INTO Users VALUES ('John','TI86511927','user2','123',true);
